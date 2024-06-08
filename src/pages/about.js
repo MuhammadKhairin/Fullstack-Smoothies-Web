@@ -1,10 +1,10 @@
 import Layout from "@/components/layouts/Layout";
 import React from "react";
 
-export default function Transaction() {
+export default function About() {
   return (
     <Layout>
-    <h1>Home Page</h1>
+    <h1>About</h1>
     </Layout>
   );
 }
