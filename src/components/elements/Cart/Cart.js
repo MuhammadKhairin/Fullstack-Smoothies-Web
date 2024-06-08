@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styles from "./index.module.css";
 import { useCart, useCartDispatch } from "@/components/context/CartContext";
 import Image from "next/image";
+import api from "@/api";
 
 const Cart = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const [isContactingAdmin, setIsContactingAdmin] = useState(false);
   const carts = useCart();
   const dispatch = useCartDispatch();
-  
 
   const handleAddToCart = (products) => {
     dispatch({
@@ -32,15 +33,41 @@ const Cart = () => {
   };
 
   const getPayUrl = () => {
-    let items = carts.map(cart => `${encodeURIComponent(cart.name)} (${cart.quantitiy})`).join(', ');
+    let items = carts
+      .map((cart) => `${encodeURIComponent(cart.name)} (${cart.quantitiy})`)
+      .join(", ");
     let totalPrice = getTotalPrice();
     return `https://wa.me/6281258266577?text=Hallo%20Admin%20saya%20mau%20order%20smoothies%20${items}%20dengan%20total%20harga%20${totalPrice}`;
   };
 
-  const handleButtonClick = () => {
-    setIsClicked(true);
+  const handleCheckout = async () => {
+    const products = carts.map((item) => {
+      return {
+        id: item.id,
+        quantity: item.quantitiy,
+      };
+    });
+    try {
+      const payload = {
+        total_price: +getTotalPrice(),
+        products,
+      };
+      const response = await api.post("/transactions", payload);
+      if (response.status === 200 && carts.length > 0) {
+        setIsClicked(true);
+        setIsContactingAdmin(true); 
+        setTimeout(() => {
+          window.location.reload(); 
+        }, 8000);
+      } else {
+        console.error("Failed to save cart data");
+      }
+    } catch (error) {
+      console.error("Error saving cart data", error);
+    }
   };
 
+  const isCartEmpty = carts.length === 0;
 
   return (
     <div className={styles.cart}>
@@ -75,8 +102,13 @@ const Cart = () => {
           <p>Total Harga</p>
           <p>{getTotalPrice()}</p>
         </div>
-        <button onClick={handleButtonClick}>Checkout</button>
-        <a href={getPayUrl()}  className={isClicked ? '' : styles.disabled} >Hubungi Admin</a>
+        <button onClick={handleCheckout}  className={!isCartEmpty ? "" : styles.disabled}>Checkout</button>
+        <a
+          href={getPayUrl()}
+          className={isClicked && isContactingAdmin &&!isCartEmpty ? "" : styles.disabled}
+        >
+          Hubungi Admin
+        </a>
       </div>
     </div>
   );
