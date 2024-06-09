@@ -12,6 +12,7 @@ const Layout = ({ children }) => {
 
   return (
     <main className={styles.layout}>
+    <title>Smoothies Mapan</title>
       <asaid className={styles.sidebar}>
         <nav className={styles.sidebar__nav}>
           <ul>
