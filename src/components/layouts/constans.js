@@ -10,5 +10,5 @@ export const MENU_LIST = [
   {
     name: "About",
     path: "/about",
-  },
+  }
 ];

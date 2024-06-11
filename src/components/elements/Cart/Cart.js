@@ -42,30 +42,41 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     const products = carts.map((item) => {
-      return {
-        id: item.id,
-        quantity: item.quantitiy,
-      };
+        return {
+            id: item.id,
+            quantity: item.quantitiy,
+        };
     });
     try {
-      const payload = {
-        total_price: +getTotalPrice(),
-        products,
-      };
-      const response = await api.post("/transactions", payload);
-      if (response.status === 200 && carts.length > 0) {
-        setIsClicked(true);
-        setIsContactingAdmin(true); 
-        setTimeout(() => {
-          window.location.reload(); 
-        }, 8000);
-      } else {
-        console.error("Failed to save cart data");
-      }
+        const payload = {
+            total_price: +getTotalPrice(),
+            products,
+        };
+
+        // Ambil accessToken dari localStorage
+        const accessToken = localStorage.getItem('accessToken');
+
+        const response = await api.post("/transactions", payload, {
+            headers: {
+                Authorization: `Bearer ${accessToken}` // Tambahkan accessToken ke header
+            }
+        });
+        if (response.status === 200 && carts.length > 0) {
+            setIsClicked(true);
+            setIsContactingAdmin(true);
+            alert("Pesanan Anda Telah Diterima Silahkan Hubungi Penjual Untuk Melanjutkan Pemesanan")
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 8000);
+        } else {
+            console.error("Failed to save cart data");
+        }
     } catch (error) {
-      console.error("Error saving cart data", error);
+        console.error("Error saving cart data", error);
     }
-  };
+};
+
 
   const isCartEmpty = carts.length === 0;
 
@@ -107,7 +118,7 @@ const Cart = () => {
           href={getPayUrl()}
           className={isClicked && isContactingAdmin &&!isCartEmpty ? "" : styles.disabled}
         >
-          Hubungi Admin
+          Hubungi Penjual
         </a>
       </div>
     </div>
