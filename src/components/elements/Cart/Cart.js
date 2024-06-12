@@ -3,6 +3,8 @@ import styles from "./index.module.css";
 import { useCart, useCartDispatch } from "@/components/context/CartContext";
 import Image from "next/image";
 import api from "@/api";
+import { useRouter } from "next/router";
+
 
 const Cart = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -33,12 +35,24 @@ const Cart = () => {
   };
 
   const getPayUrl = () => {
-    let items = carts
-      .map((cart) => `${encodeURIComponent(cart.name)} (${cart.quantitiy})`)
-      .join(", ");
-    let totalPrice = getTotalPrice();
-    return `https://wa.me/6281258266577?text=Hallo%20Admin%20saya%20mau%20order%20smoothies%20${items}%20dengan%20total%20harga%20${totalPrice}`;
+    try {
+      let username = localStorage.getItem('username'); 
+      if (!username) {
+        throw new Error('Username not found in localStorage');
+      }
+  
+      let items = carts
+        .map((cart) => `${encodeURIComponent(cart.name)} (${cart.quantity})`)
+        .join(", ");
+      let totalPrice = getTotalPrice();
+  
+      return `https://wa.me/6281258266577?text=Hallo%20Admin%20saya%20${encodeURIComponent(username)}%20mau%20order%20smoothies%20${items}%20dengan%20total%20harga%20${totalPrice}`;
+    } catch (error) {
+      console.error('Error in getPayUrl:', error);
+    }
   };
+  
+  
 
   const handleCheckout = async () => {
     const products = carts.map((item) => {

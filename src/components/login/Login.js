@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
 import api from '@/api';
-import Register from '../register/Register';
+
 
 const Login = () => {
   const router = useRouter();
@@ -14,12 +14,14 @@ const Login = () => {
     event.preventDefault();
     try {
       const response = await api.post('/auth/login', { email, password });
-      const { accessToken, refreshToken } = response.data;
-      localStorage.setItem('refreshToken', refreshToken)
+      const { accessToken, refreshToken, names } = response.data;
+      localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('username', names);  
       await router.push('/menu');
     } catch (error) {
       console.error('Login error:', error.response.data.message);
+      router.push('/login')
       setError(error.response.data.message);
     }
 
@@ -30,6 +32,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <title>Login - Smoothies Mapan</title>
       <h1>Login</h1>
       <form onSubmit={handleLogin} className={styles.form}>
         <label className={styles.label}>

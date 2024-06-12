@@ -22,6 +22,7 @@ const Layout = ({ children }) => {
       // Hapus token dari penyimpanan klien saat logout
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('username')
       setIsLoggedIn(false); // Set status login menjadi false setelah logout
       router.push('/login'); // Redirect ke halaman login setelah logout
     } catch (error) {

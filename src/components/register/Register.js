@@ -26,7 +26,8 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.container}> 
+    <div className={styles.container}>
+    <title>Register - Smoothies Mapan</title> 
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
         <label>
@@ -41,10 +42,10 @@ const Register = () => {
           Password:
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </label>
-        <button type="submit" className={styles.button}>Register</button> 
+        <button type="submit" className={styles.submit}>Register</button> 
       </form>
       <p>
-        Sudah punya akun? <button onClick={handleLoginRedirect}>Login</button>
+        Sudah punya akun? <button className={styles.link} onClick={handleLoginRedirect}>Login</button>
       </p>
     </div>
   );
