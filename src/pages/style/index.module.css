@@ -1,0 +1,61 @@
+
+
+.homeContainer {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    overflow: auto;
+    max-height: 100%;
+  }
+  
+  .introSection,
+  .benefitsSection,
+  .productsSection,
+  .menuSection {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mainTitle {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    text-align: center;
+    font-size: 1.2em;
+  }
+  
+  .sectionTitle {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .menuSection > p {
+    text-align: center;
+  }
+  
+  .benefitsList,
+  .productList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .benefitItem,
+  .productItem {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  
+  .benefitItem h3,
+  .productItem h3 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+  }
+  

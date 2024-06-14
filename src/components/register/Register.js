@@ -26,6 +26,7 @@ const Register = () => {
   };
 
   return (
+    <div className={styles.background}>
     <div className={styles.container}>
     <title>Register - Smoothies Mapan</title> 
       <h1>Register</h1>
@@ -47,6 +48,7 @@ const Register = () => {
       <p>
         Sudah punya akun? <button className={styles.link} onClick={handleLoginRedirect}>Login</button>
       </p>
+    </div>
     </div>
   );
 };

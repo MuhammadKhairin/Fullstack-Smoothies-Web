@@ -1,4 +1,7 @@
 .layout {
+  background-image: url('../images/BG_Home.jpeg');
+  background-size: cover;
+  background-position: center;
   width: 100%;
   height: 100vh;
   position: relative;
@@ -7,6 +10,11 @@
 }
 
 .sidebar {
+  background-image: url("../images/Logo.png");
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-position-y: 10px;
   background-color: var( --color-dark-blue );
   width: 130px;
   display: flex;

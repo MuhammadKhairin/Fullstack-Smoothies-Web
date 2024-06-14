@@ -5,7 +5,6 @@ import Image from "next/image";
 import api from "@/api";
 import { useRouter } from "next/router";
 
-
 const Cart = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isContactingAdmin, setIsContactingAdmin] = useState(false);
@@ -36,61 +35,61 @@ const Cart = () => {
 
   const getPayUrl = () => {
     try {
-      let username = localStorage.getItem('username'); 
+      let username = localStorage.getItem("username");
       if (!username) {
-        throw new Error('Username not found in localStorage');
+        throw new Error("Username not found in localStorage");
       }
-  
+
       let items = carts
         .map((cart) => `${encodeURIComponent(cart.name)} (${cart.quantity})`)
         .join(", ");
       let totalPrice = getTotalPrice();
-  
-      return `https://wa.me/6281258266577?text=Hallo%20Admin%20saya%20${encodeURIComponent(username)}%20mau%20order%20smoothies%20${items}%20dengan%20total%20harga%20${totalPrice}`;
+
+      return `https://wa.me/6281258266577?text=Hallo%20Admin%20saya%20${encodeURIComponent(
+        username
+      )}%20mau%20order%20smoothies%20${items}%20dengan%20total%20harga%20${totalPrice}`;
     } catch (error) {
-      console.error('Error in getPayUrl:', error);
+      console.error("Error in getPayUrl:", error);
     }
   };
-  
-  
 
   const handleCheckout = async () => {
     const products = carts.map((item) => {
-        return {
-            id: item.id,
-            quantity: item.quantitiy,
-        };
+      return {
+        id: item.id,
+        quantity: item.quantitiy,
+      };
     });
     try {
-        const payload = {
-            total_price: +getTotalPrice(),
-            products,
-        };
+      const payload = {
+        total_price: +getTotalPrice(),
+        products,
+      };
 
-        // Ambil accessToken dari localStorage
-        const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
 
-        const response = await api.post("/transactions", payload, {
-            headers: {
-                Authorization: `Bearer ${accessToken}` // Tambahkan accessToken ke header
-            }
-        });
-        if (response.status === 200 && carts.length > 0) {
-            setIsClicked(true);
-            setIsContactingAdmin(true);
-            alert("Pesanan Anda Telah Diterima Silahkan Hubungi Penjual Untuk Melanjutkan Pemesanan")
+      const response = await api.post("/transactions", payload, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, 
+        },
+      });
+      if (response.status === 200 && carts.length > 0) {
+        setIsClicked(true);
+        setIsContactingAdmin(true);
+        alert(
+          "Pesanan Anda Telah Diterima Silahkan Hubungi Penjual Untuk Melanjutkan Pemesanan"
+        );
 
-            setTimeout(() => {
-                window.location.reload();
-            }, 8000);
-        } else {
-            console.error("Failed to save cart data");
-        }
+        setTimeout(() => {
+          window.location.reload();
+        }, 8000);
+      } else {
+        console.error("Failed to save cart data");
+      }
     } catch (error) {
-        console.error("Error saving cart data", error);
+      console.error("Error saving cart data", error);
     }
-};
-
+  };
 
   const isCartEmpty = carts.length === 0;
 
@@ -127,10 +126,19 @@ const Cart = () => {
           <p>Total Harga</p>
           <p>{getTotalPrice()}</p>
         </div>
-        <button onClick={handleCheckout}  className={!isCartEmpty ? "" : styles.disabled}>Checkout</button>
+        <button
+          onClick={handleCheckout}
+          className={!isCartEmpty ? "" : styles.disabled}
+        >
+          Checkout
+        </button>
         <a
           href={getPayUrl()}
-          className={isClicked && isContactingAdmin &&!isCartEmpty ? "" : styles.disabled}
+          className={
+            isClicked && isContactingAdmin && !isCartEmpty
+              ? ""
+              : styles.disabled
+          }
         >
           Hubungi Penjual
         </a>

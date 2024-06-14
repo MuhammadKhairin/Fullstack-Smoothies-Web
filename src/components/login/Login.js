@@ -21,7 +21,6 @@ const Login = () => {
       await router.push('/menu');
     } catch (error) {
       console.error('Login error:', error.response.data.message);
-      router.push('/login')
       setError(error.response.data.message);
     }
 
@@ -31,6 +30,7 @@ const Login = () => {
         }
 
   return (
+    <div className={styles.background}>
     <div className={styles.container}>
       <title>Login - Smoothies Mapan</title>
       <h1>Login</h1>
@@ -49,6 +49,7 @@ const Login = () => {
       <p>
         Belum punya akun? <button onClick={handleRegister} className={styles.link}>Register di sini</button>
       </p>
+    </div>
     </div>
   )
 }
