@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
       localStorage.removeItem("username");
 
       setIsLoggedIn(false); 
-      router.push("/login"); 
+      router.push("/"); 
     } catch (error) {
       console.error("Failed to logout:", error);
     }

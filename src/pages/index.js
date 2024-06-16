@@ -1,8 +1,17 @@
 import Layout from "@/components/layouts/Layout";
 import React from "react";
 import styles from "./style/index.module.css";
+import { useRouter } from "next/router";
+
 
 export default function Home() {
+  //call useRouter
+  const router = useRouter();
+
+  //Navigate menu Button
+  const handleMenu = () => {
+    router.push('/menu')
+  }
   return (
     <Layout>
       <div className={styles.homeContainer}>
@@ -31,23 +40,20 @@ export default function Home() {
           <h2 className={styles.sectionTitle}>Produk Terlaris Kami</h2>
           <ul className={styles.productList}>
             <li className={styles.productItem}>
-              <h3>Tropical Bliss</h3>
-              <p>Campuran segar dari mangga, nanas, dan air kelapa. Cocok untuk merasakan cita rasa tropis!</p>
+              <h3>Smoothies Mangga</h3>
+              <p>Smoothies Ini dibuat Menggunakan Buah Mangga Yang Segar dan Yang Lebih Nikmat Bercampur dengan Berbagai Toping Pelengkap</p>
             </li>
             <li className={styles.productItem}>
-              <h3>Green Detox</h3>
-              <p>Campuran kuat dari kale, bayam, apel hijau, dan lemon. Bagus untuk membersihkan dan menyegarkan tubuh Anda.</p>
-            </li>
-            <li className={styles.productItem}>
-              <h3>Berry Blast</h3>
-              <p>Kombinasi lezat dari stroberi, blueberry, dan yogurt Yunani. Ideal untuk memulai hari dengan energi yang baik.</p>
+              <h3>Smoothies Strawberry</h3>
+              <p>Smoothies Ini dibuat Menggunakan Buah Strawberry Yang Segar dan Yang Lebih Nikmat Bercampur dengan Berbagai Toping Pelengkap</p>
             </li>
           </ul>
         </section>
 
         <section className={styles.menuSection}>
           <h2 className={styles.sectionTitle}>Jelajahi Menu Smoothie Kami</h2>
-          <p>Dari smoothie kaya protein hingga campuran detoks hijau, menu kami menawarkan sesuatu untuk semua orang. Jelajahi berbagai pilihan kami dan temukan minuman favorit baru Anda.</p>
+          <p>Kunjungi Daftar Menu Kami Kami Menjual Berbagai Macam Smoothies</p>
+          <button onClick={handleMenu}>Menu</button>
         </section>
       </div>
     </Layout>
